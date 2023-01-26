@@ -7,17 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
 
-  <com.google.android.material.textfield.TextInputEditText
-      android:id="@+id/txtInput"
-      android:layout_width="275dp"
-      android:layout_height="54dp"
-      android:hint="There should be a text"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.446" />
-
   <Button
       android:id="@+id/bt_finish_details_activity"
       android:layout_width="wrap_content"
@@ -25,7 +14,32 @@
       android:text="OK"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/txtInput" />
+      app:layout_constraintTop_toBottomOf="@+id/txtInput"
+      app:layout_constraintVertical_bias="0.959" />
+
+  <TextView
+      android:id="@+id/txtInput"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="TextView"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.022" />
+
+  <WebView
+      android:id="@+id/web_view"
+      android:layout_width="413dp"
+      android:layout_height="586dp"
+      app:layout_constraintBottom_toTopOf="@+id/bt_finish_details_activity"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.428"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/txtInput"
+      app:layout_constraintVertical_bias="0.703" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
