@@ -7,7 +7,7 @@
     tools:context=".ui.home.HomeFragment">
 
     <Button
-        android:id="@+id/home_btscan"
+        android:id="@+id/home_bt_torch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/torchbutton"
@@ -40,7 +40,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="252dp"
         android:layout_height="54dp"
-        app:layout_constraintBottom_toTopOf="@+id/home_btscan"
+        app:layout_constraintBottom_toTopOf="@+id/home_bt_torch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_decorated_barcode_view">

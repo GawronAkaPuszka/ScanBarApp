@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment implements
         barcodeScannerView.setStatusText(getString(R.string.status_scanner_message));
         barcodeScannerView.decodeContinuous(callback);
 
-        switchFlashlightButton = binding.homeBtscan;
+        switchFlashlightButton = binding.homeBtTorch;
         switchFlashlightButton.setText(R.string.turn_on_flashlight);
 
 

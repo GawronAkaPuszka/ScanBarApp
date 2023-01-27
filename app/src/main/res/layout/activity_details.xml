@@ -9,37 +9,98 @@
 
   <Button
       android:id="@+id/bt_finish_details_activity"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="OK"
+      android:layout_width="95dp"
+      android:layout_height="47dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginBottom="8dp"
+      android:text="@string/return_text"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/txtInput"
-      app:layout_constraintVertical_bias="0.959" />
+      app:layout_constraintEnd_toStartOf="@+id/bt_save_site"
+      app:layout_constraintStart_toStartOf="parent" />
 
-  <TextView
-      android:id="@+id/txtInput"
+  <Button
+      android:id="@+id/bt_save_site"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="TextView"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginBottom="8dp"
+      android:text="@string/saveSite"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.022" />
+      app:layout_constraintStart_toEndOf="@+id/bt_finish_details_activity" />
 
   <WebView
       android:id="@+id/web_view"
-      android:layout_width="413dp"
-      android:layout_height="586dp"
-      app:layout_constraintBottom_toTopOf="@+id/bt_finish_details_activity"
+      android:layout_width="400dp"
+      android:layout_height="603dp"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.428"
+      app:layout_constraintHorizontal_bias="0.454"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="@+id/txtInput"
-      app:layout_constraintVertical_bias="0.703" />
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.445">
+
+  </WebView>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_marginBottom="1dp"
+      android:orientation="horizontal"
+      app:layout_constraintBottom_toTopOf="@+id/web_view"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.0">
+
+    <ImageButton
+        android:id="@+id/img_bt_allegro"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/shop_3"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/allegro_logo"/>
+
+    <ImageButton
+        android:id="@+id/img_bt_google"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/google"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/google_logo" />
+
+    <ImageButton
+        android:id="@+id/img_bt_obi"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/shop_2"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/obi_logo" />
+
+    <ImageButton
+        android:id="@+id/img_bt_carrefour"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/shop_1"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/carrefour_logo" />
+  </LinearLayout>
+
+  <ProgressBar
+      android:id="@+id/web_progress_bar"
+      style="?android:attr/progressBarStyleHorizontal"
+      android:layout_width="match_parent"
+      android:layout_height="7dp"
+      android:max="3"
+      android:progress="100"
+      app:layout_constraintBottom_toTopOf="@+id/web_view"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
