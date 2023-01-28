@@ -5,18 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.test4.DetailsActivity;
 import com.example.test4.HistoryDetailsActivity;
 import com.example.test4.databinding.FragmentHistoryBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HistoryFragment extends Fragment {
 
     private FragmentHistoryBinding binding;
+    private FloatingActionButton btAdd;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -24,9 +24,18 @@ public class HistoryFragment extends Fragment {
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        Button testbt = binding.testBt;
+        initItems();
+        initListeners();
 
-        testbt.setOnClickListener(new View.OnClickListener() {
+        return root;
+    }
+
+    private void initItems() {
+        btAdd = binding.btFloatActAdd;
+    }
+
+    private void initListeners() {
+        btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), HistoryDetailsActivity.class);
@@ -34,8 +43,6 @@ public class HistoryFragment extends Fragment {
                 startActivity(i);
             }
         });
-
-        return root;
     }
 
     @Override

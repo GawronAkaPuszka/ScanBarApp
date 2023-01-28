@@ -13,10 +13,14 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class DetailsActivity extends AppCompatActivity {
 
-        private Button btFinishActivity;
+        private FloatingActionButton btGoBack;
+        private FloatingActionButton btTakeScreenShoot;
+        private FloatingActionButton btSaveLink;
         private WebView myWebView;
         protected ProgressBar progressBar;
 
@@ -49,7 +53,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         private void initItems() {
-            btFinishActivity = findViewById(R.id.bt_finish_details_activity);
+            btGoBack = findViewById(R.id.bt_float_goback);
             progressBar = findViewById(R.id.web_progress_bar);
             myWebView = findViewById(R.id.web_view);
             btAllegro = findViewById(R.id.img_bt_allegro);
@@ -63,7 +67,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         private void initOnClickListeners() {
-            btFinishActivity.setOnClickListener(new View.OnClickListener() {
+            btGoBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     finish();

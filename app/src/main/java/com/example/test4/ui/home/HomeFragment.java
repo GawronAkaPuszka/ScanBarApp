@@ -2,15 +2,20 @@ package com.example.test4.ui.home;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -18,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.test4.DetailsActivity;
 import com.example.test4.R;
 import com.example.test4.databinding.FragmentHomeBinding;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -32,52 +38,89 @@ public class HomeFragment extends Fragment implements
     private FragmentHomeBinding binding;
     private CaptureManager capture;
     private DecoratedBarcodeView barcodeScannerView;
-    private Button switchFlashlightButton;
+    private ImageButton switchFlashlightButton;
+    private boolean flashOn;
+    private ImageButton btSubmitCode;
+    private TextInputEditText txtInput;
     private String lastText;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.homeTxtInput;
-
-        barcodeScannerView = binding.homeDecoratedBarcodeView;
-        barcodeScannerView.setTorchListener(this);
-        barcodeScannerView.setStatusText(getString(R.string.status_scanner_message));
-        barcodeScannerView.decodeContinuous(callback);
-
-        switchFlashlightButton = binding.homeBtTorch;
-        switchFlashlightButton.setText(R.string.turn_on_flashlight);
-
-
-        // if the device does not have flashlight in its camera,
-        // then remove the switch flashlight button...
-        if (!hasFlash()) {
-            switchFlashlightButton.setVisibility(View.GONE);
-        }
+        initItems();
+        initListeners();
 
         capture = new CaptureManager(this.getActivity(), barcodeScannerView);
         capture.initializeFromIntent(this.getActivity().getIntent(), savedInstanceState);
         capture.setShowMissingCameraPermissionDialog(false);
-        //capture.decode();
+
+        return root;
+    }
+
+    private void initItems() {
+        barcodeScannerView = binding.homeDecoratedBarcodeView;
+        txtInput = binding.homeTxtInput;
+        switchFlashlightButton = binding.btFlashlight;
+        btSubmitCode = binding.btSubmitCode;
+        btSubmitCode.setClickable(false);
+        flashOn = false;
+
+        //if the device does not have flashlight in its camera,
+        //then remove the switch flashlight button...
+        if (!hasFlash()) switchFlashlightButton.setVisibility(View.GONE);
+
+        //set status message and tell scanner to scan without
+        //going back to previous activity (decodeContinuous does the trick)
+        barcodeScannerView.setStatusText(getString(R.string.status_scanner_message));
+        barcodeScannerView.decodeContinuous(callback);
+    }
+
+    private void initListeners() {
+        barcodeScannerView.setTorchListener(this);
+
+        btSubmitCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), DetailsActivity.class);
+                i.putExtra("ID_CODE",txtInput.getText().toString().trim());
+                startActivity(i);
+            }
+        });
+
         switchFlashlightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switchFlashlight(view);
             }
         });
-        return root;
+
+        txtInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() != 0)
+                    btSubmitCode.setClickable(true);
+                else
+                    btSubmitCode.setClickable(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 
     private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
             if(result.getText() == null || result.getText().equals(lastText)) {
-                // Prevent duplicate scans
+                //Prevent duplicate scans
                 return;
             }
             lastText = result.getText();
@@ -134,21 +177,25 @@ public class HomeFragment extends Fragment implements
     }
 
     public void switchFlashlight(View view) {
-        if (getString(R.string.turn_on_flashlight).equals(switchFlashlightButton.getText())) {
+        if (!flashOn) {
             barcodeScannerView.setTorchOn();
+            flashOn = !flashOn;
         } else {
             barcodeScannerView.setTorchOff();
+            flashOn = !flashOn;
         }
     }
 
     @Override
     public void onTorchOn() {
-        switchFlashlightButton.setText(R.string.turn_off_flashlight);
+        switchFlashlightButton.setImageDrawable(
+                ContextCompat.getDrawable(this.getContext(), R.drawable.ic_baseline_flashlight_off_24));
     }
 
     @Override
     public void onTorchOff() {
-        switchFlashlightButton.setText(R.string.turn_on_flashlight);
+        switchFlashlightButton.setImageDrawable(
+                ContextCompat.getDrawable(this.getContext(), R.drawable.ic_baseline_flashlight_on_24));
     }
 
     @Override

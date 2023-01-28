@@ -2,54 +2,74 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <Button
-        android:id="@+id/home_bt_torch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/torchbutton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_decorated_barcode_view"
-        app:layout_constraintVertical_bias="0.685" />
-
     <com.journeyapps.barcodescanner.DecoratedBarcodeView
         android:id="@+id/home_decorated_barcode_view"
-        android:layout_width="368dp"
-        android:layout_height="306dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037"
         app:zxing_preview_scaling_strategy="fitXY"
         app:zxing_use_texture_view="false">
 
     </com.journeyapps.barcodescanner.DecoratedBarcodeView>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="252dp"
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
         android:layout_height="54dp"
-        app:layout_constraintBottom_toTopOf="@+id/home_bt_torch"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_submit_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_decorated_barcode_view">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/home_txt_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/txt_input" />
+            android:hint="@string/txt_input"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textColorHint="#616161" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/bt_submit_code"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="Submit"
+        android:src="@drawable/ic_check_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bt_flashlight" />
+
+    <ImageButton
+        android:id="@+id/bt_flashlight"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="Flashlight"
+        android:src="@drawable/ic_baseline_flashlight_on_24"
+        app:layout_constraintEnd_toStartOf="@+id/bt_submit_code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bt_submit_code" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

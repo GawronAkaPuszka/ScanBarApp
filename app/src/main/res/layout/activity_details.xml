@@ -7,90 +7,41 @@
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
 
-  <Button
-      android:id="@+id/bt_finish_details_activity"
-      android:layout_width="95dp"
-      android:layout_height="47dp"
-      android:layout_marginStart="8dp"
-      android:layout_marginEnd="8dp"
-      android:layout_marginBottom="8dp"
-      android:text="@string/return_text"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/bt_save_site"
-      app:layout_constraintStart_toStartOf="parent" />
-
-  <Button
-      android:id="@+id/bt_save_site"
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/bt_float_goback"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
-      android:layout_marginEnd="8dp"
       android:layout_marginBottom="8dp"
-      android:text="@string/saveSite"
+      android:clickable="true"
+      android:contentDescription="@string/return_text"
+      app:backgroundTint="@color/teal_200"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/bt_finish_details_activity" />
-
-  <WebView
-      android:id="@+id/web_view"
-      android:layout_width="400dp"
-      android:layout_height="603dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.454"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.445">
+      app:srcCompat="@drawable/ic_goback" />
 
-  </WebView>
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/bt_float_screenshoot"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:clickable="true"
+      android:contentDescription="@string/screenshoot"
+      app:layout_constraintBottom_toBottomOf="@+id/bt_float_saveSite"
+      app:layout_constraintEnd_toStartOf="@+id/bt_float_saveSite"
+      app:srcCompat="@drawable/ic_baseline_screenshot_24" />
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:layout_marginBottom="1dp"
-      android:orientation="horizontal"
-      app:layout_constraintBottom_toTopOf="@+id/web_view"
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/bt_float_saveSite"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:clickable="true"
+      android:contentDescription="@string/saveSite"
+      app:layout_constraintBottom_toBottomOf="@+id/bt_float_goback"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.0">
-
-    <ImageButton
-        android:id="@+id/img_bt_allegro"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/shop_3"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/allegro_logo"/>
-
-    <ImageButton
-        android:id="@+id/img_bt_google"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/google"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/google_logo" />
-
-    <ImageButton
-        android:id="@+id/img_bt_obi"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/shop_2"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/obi_logo" />
-
-    <ImageButton
-        android:id="@+id/img_bt_carrefour"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/shop_1"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/carrefour_logo" />
-  </LinearLayout>
+      app:layout_constraintTop_toTopOf="@+id/bt_float_goback"
+      app:srcCompat="@drawable/ic_baseline_save_24" />
 
   <ProgressBar
       android:id="@+id/web_progress_bar"
@@ -99,8 +50,67 @@
       android:layout_height="7dp"
       android:max="3"
       android:progress="100"
-      app:layout_constraintBottom_toTopOf="@+id/web_view"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+  <WebView
+      android:id="@+id/web_view"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_marginBottom="8dp"
+      app:layout_constraintBottom_toTopOf="@+id/bt_float_goback"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/web_progress_bar">
+
+  </WebView>
+
+  <LinearLayout
+      android:id="@+id/linearLayout"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:orientation="horizontal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+    <ImageButton
+        android:id="@+id/img_bt_allegro"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/shop_3"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/allegro_logo" />
+
+    <ImageButton
+        android:id="@+id/img_bt_google"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/google"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/google_logo" />
+
+    <ImageButton
+        android:id="@+id/img_bt_obi"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/shop_2"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/obi_logo" />
+
+    <ImageButton
+        android:id="@+id/img_bt_carrefour"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/shop_1"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/carrefour_logo" />
+  </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
