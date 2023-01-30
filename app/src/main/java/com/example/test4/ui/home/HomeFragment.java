@@ -84,9 +84,13 @@ public class HomeFragment extends Fragment implements
         btSubmitCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), DetailsActivity.class);
-                i.putExtra("ID_CODE",txtInput.getText().toString().trim());
-                startActivity(i);
+                if(txtInput.getText().toString().trim().equals("")){
+                    Toast.makeText(getContext(), "No code given", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent i = new Intent(getActivity(), DetailsActivity.class);
+                    i.putExtra("ID_CODE",txtInput.getText().toString().trim());
+                    startActivity(i);
+                }
             }
         });
 
