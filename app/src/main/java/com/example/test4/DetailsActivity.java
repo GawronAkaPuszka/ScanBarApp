@@ -43,6 +43,10 @@ public class DetailsActivity extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 code = extras.getString("ID_CODE");
+                if(code.equals("")) {
+                    Toast.makeText(getApplicationContext(), "No code given", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
                 activeView = "google";
                 myWebView.loadUrl("https://www.google.com/search?q=" + code);
             } else {

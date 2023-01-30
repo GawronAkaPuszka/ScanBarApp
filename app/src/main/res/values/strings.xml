@@ -8,7 +8,7 @@
     <string name="status_scanner_message">Place barcode inside a box</string>
     <string name="turn_on_flashlight">Turn on Flashlight</string>
     <string name="turn_off_flashlight">Turn off Flashlight</string>
-    <string name="txt_input">Type in barcode</string>
+    <string name="txt_input">Type in barcode or product name</string>
     <string name="torchbutton">TorchButton</string>
     <string name="shop_1">carrefour</string>
     <string name="shop_2">obi</string>
