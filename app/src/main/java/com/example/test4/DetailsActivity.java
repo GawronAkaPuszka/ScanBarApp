@@ -19,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class DetailsActivity extends AppCompatActivity {
 
         private FloatingActionButton btGoBack;
-        private FloatingActionButton btTakeScreenShoot;
+        private FloatingActionButton btTakeScreenShot;
         private FloatingActionButton btSaveLink;
         private WebView myWebView;
         protected ProgressBar progressBar;

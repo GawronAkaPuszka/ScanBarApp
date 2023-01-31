@@ -2,9 +2,9 @@ package com.example.test4.ui.dashboard;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.media.Image;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -23,10 +23,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
     private static final String COLUMN_LINK = "barcode_link";
     private static final String COLUMN_LINK_TIMESTAMP = "barcode_link_timestamp";
 
-
-
-
-    public MyDatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -34,7 +31,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query =  "CREATE TABLE " + TABLE_NAME +
-                        " (" + COLUMN_BARCODE_ID + "INTEGER PRIMARY KEY, " +
+                        " (" + COLUMN_BARCODE_ID + "TEXT PRIMARY KEY, " +
                         COLUMN_LAST_SCAN_TIMESTAMP + " TEXT, " +
                         COLUMN_NAME + " TEXT, " +
                         COLUMN_PHOTO + " BLOB, " +
@@ -82,5 +79,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
 
     public void deleteBarcode() {
 
+    }
+
+    Cursor readAllData() {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 }
