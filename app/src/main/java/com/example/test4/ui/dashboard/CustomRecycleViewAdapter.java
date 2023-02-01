@@ -1,6 +1,9 @@
 package com.example.test4.ui.dashboard;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +46,7 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.barcode_id.setText(String.valueOf(barcode_id.get(position)));
         holder.barcode_name.setText(String.valueOf(barcode_name.get(position)));
-        //holder.barcode_photo.setImageBitmap((barcode_photo.get(position)));
+        holder.barcode_photo.setImageBitmap((Bitmap) barcode_photo.get(position));
         holder.barcode_scan_timestamp.setText(String.valueOf(barcode_last_scan_timestamp.get(position)));
     }
 

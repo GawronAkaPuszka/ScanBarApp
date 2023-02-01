@@ -24,7 +24,7 @@
         android:editable="false"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Barcode"
+        android:hint="Barcode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_title" />
@@ -36,7 +36,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_barcode" />
@@ -49,7 +49,7 @@
         android:editable="false"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Date of Scan"
+        android:hint="Date of Scan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_name" />
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="@string/edit"
+        android:text="ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bt_return"
         app:layout_constraintTop_toTopOf="@+id/bt_return" />

@@ -3,6 +3,7 @@ package com.example.test4;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -13,7 +14,10 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.test4.ui.dashboard.MyDatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.ByteArrayOutputStream;
 
 
 public class DetailsActivity extends AppCompatActivity {
@@ -23,6 +27,7 @@ public class DetailsActivity extends AppCompatActivity {
         private FloatingActionButton btSaveLink;
         private WebView myWebView;
         protected ProgressBar progressBar;
+        private MyDatabaseHelper db;
 
         //Shop list buttons
         private ImageButton btAllegro;
@@ -40,6 +45,18 @@ public class DetailsActivity extends AppCompatActivity {
             initItems();
             initOnClickListeners();
 
+            adjustItems();
+        }
+
+        private void initItems() {
+            btGoBack = findViewById(R.id.bt_float_goback);
+            progressBar = findViewById(R.id.web_progress_bar);
+            myWebView = findViewById(R.id.web_view);
+            btAllegro = findViewById(R.id.img_bt_allegro);
+            btCarrefour = findViewById(R.id.img_bt_carrefour);
+            btObi = findViewById(R.id.img_bt_obi);
+            btGoogle = findViewById(R.id.img_bt_google);
+
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 code = extras.getString("ID_CODE");
@@ -53,17 +70,10 @@ public class DetailsActivity extends AppCompatActivity {
                 activeView = "none";
             }
 
-            adjustItems();
-        }
-
-        private void initItems() {
-            btGoBack = findViewById(R.id.bt_float_goback);
-            progressBar = findViewById(R.id.web_progress_bar);
-            myWebView = findViewById(R.id.web_view);
-            btAllegro = findViewById(R.id.img_bt_allegro);
-            btCarrefour = findViewById(R.id.img_bt_carrefour);
-            btObi = findViewById(R.id.img_bt_obi);
-            btGoogle = findViewById(R.id.img_bt_google);
+            btTakeScreenShot = findViewById(R.id.bt_float_screenshoot);
+            btSaveLink = findViewById(R.id.bt_float_saveSite);
+            db = new MyDatabaseHelper(this);
+            db.addBarcode(code, "lol");
 
             WebSettings webSettings = myWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
@@ -75,6 +85,14 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     finish();
+                }
+            });
+
+            btTakeScreenShot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO test this
+                    insertScreenshotInDb(takeWebviewScreenshot());
                 }
             });
 
@@ -153,6 +171,24 @@ public class DetailsActivity extends AppCompatActivity {
             } else {
                 super.onBackPressed();
             }
+        }
+
+        private Bitmap takeWebviewScreenshot() {
+            Bitmap screenshot = Bitmap.createBitmap(myWebView.getWidth(), myWebView.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(screenshot);
+            myWebView.draw(canvas);
+            return screenshot;
+        }
+
+        private void insertScreenshotInDb(Bitmap img) {
+            byte[] rawScreenshot = getBitmapAsByteArray(img);
+            db.updateBarcode(code, rawScreenshot);
+        }
+
+        private static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+            return outputStream.toByteArray();
         }
 
         public class CustomBrowser extends WebViewClient {

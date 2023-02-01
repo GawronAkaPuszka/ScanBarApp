@@ -2,6 +2,8 @@ package com.example.test4.ui.dashboard;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.test4.BottomMainActivity;
 import com.example.test4.HistoryDetailsActivity;
 import com.example.test4.databinding.FragmentHistoryBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,8 +27,9 @@ public class HistoryFragment extends Fragment {
     private FloatingActionButton btAdd;
     private RecyclerView recycleView;
     private MyDatabaseHelper myDB;
-    private ArrayList<String> barcode_id, barcode_last_scan_timestamp, barcode_name, barcode_photo,
+    private ArrayList<String> barcode_id, barcode_last_scan_timestamp, barcode_name,
             barcode_photo_timestamp, barcode_link, barcode_link_timestamp;
+    private ArrayList<Bitmap> barcode_photo;
     private CustomRecycleViewAdapter CustomAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -69,7 +71,7 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), HistoryDetailsActivity.class);
-                i.putExtra("ID_CODE","jakiś kodzik XDDD");
+                i.putExtra("ID_CODE","test1");
                 startActivity(i);
             }
         });
@@ -91,7 +93,9 @@ public class HistoryFragment extends Fragment {
                 barcode_id.add(cursor.getString(0));
                 barcode_last_scan_timestamp.add(cursor.getString(1));
                 barcode_name.add(cursor.getString(2));
-                barcode_photo.add(cursor.getString(3));
+                byte[] imgByte = cursor.getBlob(3);
+                if (imgByte != null)
+                    barcode_photo.add(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
                 barcode_photo_timestamp.add(cursor.getString(4));
                 barcode_link.add(cursor.getString(5));
                 barcode_link_timestamp.add(cursor.getString(6));
