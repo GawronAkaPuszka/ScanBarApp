@@ -46,7 +46,10 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.barcode_id.setText(String.valueOf(barcode_id.get(position)));
         holder.barcode_name.setText(String.valueOf(barcode_name.get(position)));
-        holder.barcode_photo.setImageBitmap((Bitmap) barcode_photo.get(position));
+        //Photo config
+        Bitmap screenshot = (Bitmap) barcode_photo.get(position);
+
+        holder.barcode_photo.setImageBitmap(Bitmap.createScaledBitmap(screenshot, 40, 90, false ));
         holder.barcode_scan_timestamp.setText(String.valueOf(barcode_last_scan_timestamp.get(position)));
     }
 

@@ -6,9 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import com.example.test4.R;
 
 import java.io.ByteArrayOutputStream;
 
@@ -57,8 +61,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         cv.put(COLUMN_BARCODE_ID, code.toString());
         cv.put(COLUMN_LAST_SCAN_TIMESTAMP, "sampledate");
         cv.put(COLUMN_NAME, "Insert name");
-        byte[] blankPhoto = getBitmapAsByteArray(Bitmap.createBitmap(400,
-                400, Bitmap.Config.ARGB_8888));
+        //TODO coś nie działa
+        byte[] blankPhoto = getBitmapAsByteArray(BitmapFactory.decodeResource(context.getResources(), R.drawable.google_logo));
         cv.put(COLUMN_PHOTO, blankPhoto);
         cv.put(COLUMN_PHOTO_TIMESTAMP, "No screenshot given");
         cv.put(COLUMN_LINK, "No link saved");
@@ -72,13 +76,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
             Toast.makeText(context, "Insert SUCCESS", Toast.LENGTH_SHORT).show();
     }
 
-    public void updateBarcode(String barcode_id, String name) {
+    public void updateBarcode(String code, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_NAME, name);
 
-        long result = db.update(TABLE_NAME, cv, "barcode_id=", new String[] {barcode_id});
+        long result = db.update(TABLE_NAME, cv, "barcode_id=?", new String[]{code});
 
         if(result == -1) {
             Toast.makeText(context, "Update FAILED", Toast.LENGTH_SHORT).show();
@@ -86,13 +90,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
             Toast.makeText(context, "Update SUCCESS", Toast.LENGTH_SHORT).show();
     }
 
-    public void updateBarcode(String barcode_id, byte[] rawScreenshot) {
+    public void updateBarcode(String code, byte[] rawScreenshot) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_PHOTO, rawScreenshot);
 
-        long result = db.update(TABLE_NAME, cv, COLUMN_BARCODE_ID + " = " , new String[] {barcode_id});
+        long result = db.update(TABLE_NAME, cv, "barcode_id=?", new String[]{code});
 
         if(result == -1) {
             Toast.makeText(context, "Update FAILED", Toast.LENGTH_SHORT).show();
