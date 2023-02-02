@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.example.test4.R;
 
@@ -58,11 +57,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_BARCODE_ID, code.toString());
-        cv.put(COLUMN_LAST_SCAN_TIMESTAMP, "sampledate");
+        cv.put(COLUMN_BARCODE_ID, code);
+        cv.put(COLUMN_LAST_SCAN_TIMESTAMP, "00.00");
         cv.put(COLUMN_NAME, "Insert name");
-        //TODO coś nie działa
-        byte[] blankPhoto = getBitmapAsByteArray(BitmapFactory.decodeResource(context.getResources(), R.drawable.google_logo));
+        byte[] blankPhoto = getBitmapAsByteArray(BitmapFactory.decodeResource(context.getResources(), R.drawable.question_mark));
         cv.put(COLUMN_PHOTO, blankPhoto);
         cv.put(COLUMN_PHOTO_TIMESTAMP, "No screenshot given");
         cv.put(COLUMN_LINK, "No link saved");
@@ -71,12 +69,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         long result = db.insert(TABLE_NAME, null, cv);
 
         if(result == -1) {
-            Toast.makeText(context, "Insert FAILED", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.UpdateFailed, Toast.LENGTH_SHORT).show();
         } else
-            Toast.makeText(context, "Insert SUCCESS", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.UpdateSuccess, Toast.LENGTH_SHORT).show();
     }
 
-    public void updateBarcode(String code, String name) {
+    public void updateBarcodeName(String code, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -85,12 +83,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         long result = db.update(TABLE_NAME, cv, "barcode_id=?", new String[]{code});
 
         if(result == -1) {
-            Toast.makeText(context, "Update FAILED", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(context, "Update SUCCESS", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.UpdateFailed, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, R.string.UpdateSuccess, Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void updateBarcode(String code, byte[] rawScreenshot) {
+    public void updateBarcodeImage(String code, byte[] rawScreenshot) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -99,12 +98,28 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         long result = db.update(TABLE_NAME, cv, "barcode_id=?", new String[]{code});
 
         if(result == -1) {
-            Toast.makeText(context, "Update FAILED", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(context, "Update SUCCESS", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.UpdateFailed, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, R.string.UpdateSuccess, Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void deleteBarcode() {
+    public void updateBarcodeLink(String code, String link) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_LINK, link);
+
+        long result = db.update(TABLE_NAME, cv, "barcode_id=?", new String[]{code});
+
+        if(result == -1) {
+            Toast.makeText(context, R.string.UpdateFailed, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, R.string.UpdateSuccess, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void deleteBarcode(String code) {
 
     }
 

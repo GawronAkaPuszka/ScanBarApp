@@ -9,7 +9,6 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -182,7 +181,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         private void insertScreenshotInDb(Bitmap img) {
             byte[] rawScreenshot = getBitmapAsByteArray(img);
-            db.updateBarcode(code, rawScreenshot);
+            db.updateBarcodeImage(code, rawScreenshot);
         }
 
         private static byte[] getBitmapAsByteArray(Bitmap bitmap) {

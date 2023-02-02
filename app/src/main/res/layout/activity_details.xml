@@ -26,7 +26,7 @@
       android:layout_height="wrap_content"
       android:layout_marginEnd="16dp"
       android:clickable="true"
-      android:contentDescription="@string/screenshoot"
+      android:contentDescription="@string/screenshot"
       app:layout_constraintBottom_toBottomOf="@+id/bt_float_saveSite"
       app:layout_constraintEnd_toStartOf="@+id/bt_float_saveSite"
       app:srcCompat="@drawable/ic_baseline_screenshot_24" />
