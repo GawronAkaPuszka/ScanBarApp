@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
 
+  <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toTopOf="@+id/bt_float_goback"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/web_progress_bar">
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp">
+
+    </WebView>
+  </LinearLayout>
+
   <com.google.android.material.floatingactionbutton.FloatingActionButton
       android:id="@+id/bt_float_goback"
       android:layout_width="wrap_content"
@@ -53,19 +71,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-  <WebView
-      android:id="@+id/web_view"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_marginBottom="8dp"
-      app:layout_constraintBottom_toTopOf="@+id/bt_float_goback"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.0"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/web_progress_bar">
-
-  </WebView>
 
   <LinearLayout
       android:id="@+id/linearLayout"

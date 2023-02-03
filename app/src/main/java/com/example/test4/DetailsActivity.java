@@ -29,6 +29,7 @@ public class DetailsActivity extends AppCompatActivity {
         private WebView myWebView;
         protected ProgressBar progressBar;
         private MyDatabaseHelper db;
+        private WebSettings webSettings;
 
         //Shop list buttons
         private ImageButton btAllegro;
@@ -77,7 +78,7 @@ public class DetailsActivity extends AppCompatActivity {
             Date currentTime = Calendar.getInstance().getTime();
             db.addBarcode(code, currentTime.toString());
 
-            WebSettings webSettings = myWebView.getSettings();
+            webSettings = myWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             myWebView.setWebViewClient(new CustomBrowser());
         }
@@ -93,7 +94,6 @@ public class DetailsActivity extends AppCompatActivity {
             btTakeScreenShot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO test this
                     insertScreenshotInDb(takeWebviewScreenshot());
                 }
             });
@@ -101,6 +101,7 @@ public class DetailsActivity extends AppCompatActivity {
             btAllegro.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    webSettings.setJavaScriptEnabled(true);
                     if (activeView != "allegro") {
                         myWebView.clearCache(true);
                         myWebView.loadUrl("https://www.allegro.pl/listing?string=" + code);
@@ -113,6 +114,8 @@ public class DetailsActivity extends AppCompatActivity {
             btCarrefour.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //javascript breaks on this page. Simple workaround is to disable js.
+                    webSettings.setJavaScriptEnabled(false);
                     if (activeView != "carrefour") {
                         myWebView.clearCache(true);
                         myWebView.loadUrl("https://www.carrefour.pl/szukaj?q=" + code);
@@ -126,6 +129,7 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (activeView != "obi") {
+                        webSettings.setJavaScriptEnabled(true);
                         myWebView.clearCache(true);
                         myWebView.loadUrl("https://www.obi.pl/search/" + code);
                         activeView = "obi";
@@ -138,6 +142,7 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (activeView != "google") {
+                        webSettings.setJavaScriptEnabled(true);
                         myWebView.clearCache(true);
                         myWebView.loadUrl("https://www.google.com/search?q=" + code);
                         activeView = "google";
@@ -180,6 +185,7 @@ public class DetailsActivity extends AppCompatActivity {
             Canvas canvas = new Canvas(screenshot);
             myWebView.draw(canvas);
             return screenshot;
+            //TODO fix screenshots
         }
 
         private void insertScreenshotInDb(Bitmap img) {
