@@ -11,20 +11,23 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test4.HistoryDetailsActivity;
+import com.example.test4.MainActivity;
 import com.example.test4.databinding.FragmentHistoryBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class HistoryFragment extends Fragment {
 
     private FragmentHistoryBinding binding;
-    private FloatingActionButton btAdd;
     private RecyclerView recycleView;
     private MyDatabaseHelper myDB;
     private ArrayList<String> barcode_id, barcode_last_scan_timestamp, barcode_name,
@@ -45,7 +48,6 @@ public class HistoryFragment extends Fragment {
     }
 
     private void initItems() {
-        btAdd = binding.btFloatAdd;
         recycleView = binding.historyRecView;
 
         //database init
@@ -67,14 +69,7 @@ public class HistoryFragment extends Fragment {
     }
 
     private void initListeners() {
-        btAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), HistoryDetailsActivity.class);
-                i.putExtra("ID_CODE","test1");
-                startActivity(i);
-            }
-        });
+
     }
 
     @Override
@@ -101,6 +96,5 @@ public class HistoryFragment extends Fragment {
                 barcode_link_timestamp.add(cursor.getString(6));
             }
         }
-
     }
 }

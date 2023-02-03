@@ -1,6 +1,9 @@
 package com.example.test4.ui.dashboard;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,21 +11,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test4.HistoryDetailsActivity;
 import com.example.test4.R;
 
 import java.util.ArrayList;
 
 public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycleViewAdapter.MyViewHolder> {
 
-    private Context context;
-    private ArrayList barcode_id, barcode_name, barcode_photo, barcode_last_scan_timestamp;
+    private final Context context;
+    Activity activity;
+    private final ArrayList barcode_id, barcode_name, barcode_photo, barcode_last_scan_timestamp;
 
-    public CustomRecycleViewAdapter(Context context,
+    public CustomRecycleViewAdapter( Context context,
                                     ArrayList barcode_id,
                                     ArrayList barcode_name,
                                     ArrayList barcode_photo,
@@ -43,7 +49,7 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.barcode_id.setText(String.valueOf(barcode_id.get(position)));
         holder.barcode_name.setText(String.valueOf(barcode_name.get(position)));
         //Photo config
@@ -51,6 +57,14 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
 
         holder.barcode_photo.setImageBitmap(Bitmap.createScaledBitmap(screenshot, 40, 90, false ));
         holder.barcode_scan_timestamp.setText(String.valueOf(barcode_last_scan_timestamp.get(position)));
+        holder.mainHistoryLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, HistoryDetailsActivity.class);
+                intent.putExtra("ID_CODE", String.valueOf(barcode_id.get(position)));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -62,9 +76,11 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
 
         TextView barcode_id, barcode_name, barcode_scan_timestamp;
         ImageView barcode_photo;
+        LinearLayout mainHistoryLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            mainHistoryLayout = itemView.findViewById((R.id.main_history_layout));
             barcode_id = itemView.findViewById(R.id.txt_barcode_id);
             barcode_name = itemView.findViewById((R.id.txt_barcode_name));
             barcode_photo = itemView.findViewById(R.id.img_screenshot);

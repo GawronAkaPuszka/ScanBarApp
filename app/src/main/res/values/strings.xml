@@ -21,15 +21,22 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="barcode">Barcode</string>
     <string name="delete">delete</string>
     <string name="return_text">Return</string>
     <string name="edit">Edit</string>
     <string name="saveSite">Save</string>
     <string name="screenshot">Screenshot</string>
-    <string name="UpdateFailed">Update FAILED</string>
-    <string name="UpdateSuccess">Update SUCCESS</string>
-    <string name="barcode_name">Barcode name</string>
+    <string name="UpdateFailed">Update FAILED!</string>
+    <string name="UpdateSuccess">Update SUCCESS!</string>
+    <string name="DeleteFailed">Delete FAILED!</string>
+    <string name="DeleteSuccess">Delete SUCCESS!</string>
+    <string name="barcode_name">Barcode name: </string>
+    <string name="onDataUpdate">Data has been updated!</string>
+    <string name="ScanTimestamp">Scan timestamp:</string>
+    <string name="name">Name: </string>
+    <string name="ScreenshotTimestamp">Screenshot timestamp:</string>
+    <string name="SavedLink">Saved Link:</string>
+    <string name="SavedLinkTimestamp">Saved link timestamp:</string>
+    <string name="type_in_barcode_name_hint">Type in barcode name</string>
 </resources>

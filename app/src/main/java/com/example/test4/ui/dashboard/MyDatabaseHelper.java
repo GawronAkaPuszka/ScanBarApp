@@ -119,12 +119,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         }
     }
 
-    public void deleteBarcode(String code) {
+    public void deleteOneBarcode(String code) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME,"barcode_id=?", new String[]{code});
+
+        if(result == -1) {
+            Toast.makeText(context, R.string.DeleteFailed, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, R.string.DeleteSuccess, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void deleteAllBarcodes() {
 
     }
 
-    Cursor readAllData() {
-        String query = "SELECT * FROM " + TABLE_NAME;
+    public Cursor readAllData() {
+        String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_LAST_SCAN_TIMESTAMP + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -133,6 +144,19 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         }
         return cursor;
     }
+
+    public Cursor readOneItem(String code) {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_BARCODE_ID + " = " + code;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+
 
     private static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
