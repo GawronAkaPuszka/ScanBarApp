@@ -17,6 +17,8 @@ import com.example.test4.ui.dashboard.MyDatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class DetailsActivity extends AppCompatActivity {
@@ -72,7 +74,8 @@ public class DetailsActivity extends AppCompatActivity {
             btTakeScreenShot = findViewById(R.id.bt_float_screenshoot);
             btSaveLink = findViewById(R.id.bt_float_saveSite);
             db = new MyDatabaseHelper(this);
-            db.addBarcode(code, "lol");
+            Date currentTime = Calendar.getInstance().getTime();
+            db.addBarcode(code, currentTime.toString());
 
             WebSettings webSettings = myWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);

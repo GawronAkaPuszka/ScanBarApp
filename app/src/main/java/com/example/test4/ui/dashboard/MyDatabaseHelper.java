@@ -146,7 +146,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
     }
 
     public Cursor readOneItem(String code) {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_BARCODE_ID + " = " + code;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_BARCODE_ID + " = \"" + code + "\"";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;

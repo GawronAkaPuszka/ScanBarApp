@@ -1,8 +1,12 @@
 package com.example.test4;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.ActivityResultRegistry;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -67,14 +71,15 @@ public class HistoryDetailsActivity extends AppCompatActivity {
         btReturn = findViewById(R.id.bt_details_return);
         btSave = findViewById(R.id.bt_details_save);
         btSave.hide();
+
+        setTitle(code);
     }
 
     private void initListeners() {
         btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.deleteOneBarcode(code);
-                finish();
+                confirmDialog();
             }
         });
 
@@ -124,16 +129,36 @@ public class HistoryDetailsActivity extends AppCompatActivity {
         } else {
             //loop going just once but i left it. To remember how to use cursor next time :)
             while(cursor.moveToNext()) {
-                txtScanTimestamp.setText(getString(R.string.ScanTimestamp) + cursor.getString(1));
+                txtScanTimestamp.setText(getString(R.string.ScanTimestamp) + " " + cursor.getString(1));
                 txtName.setText(cursor.getString(2));
                 name = cursor.getString(2);
                 byte[] imgByte = cursor.getBlob(3);
                 if (imgByte != null)
                     imgScreenshot.setImageBitmap(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
-                txtScreenshotTimestamp.setText(getString(R.string.ScreenshotTimestamp) + cursor.getString(4));
-                txtLink.setText(getString(R.string.SavedLink) + cursor.getString(5));
-                txtLinkTimestamp.setText(getString(R.string.SavedLinkTimestamp) + cursor.getString(6));
+                txtScreenshotTimestamp.setText(getString(R.string.ScreenshotTimestamp) + " " + cursor.getString(4));
+                txtLink.setText(getString(R.string.SavedLink) + " " + cursor.getString(5));
+                txtLinkTimestamp.setText(getString(R.string.SavedLinkTimestamp) + " " + cursor.getString(6));
             }
         }
+    }
+
+    private void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.delete) + " " + getTitle() + "?");
+        builder.setMessage(getString(R.string.SureYouWantToDelete) + " " + getTitle() + "?");
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                db.deleteOneBarcode(code);
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 }

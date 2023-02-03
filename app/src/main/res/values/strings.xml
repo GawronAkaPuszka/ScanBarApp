@@ -39,4 +39,7 @@
     <string name="SavedLink">Saved Link:</string>
     <string name="SavedLinkTimestamp">Saved link timestamp:</string>
     <string name="type_in_barcode_name_hint">Type in barcode name</string>
+    <string name="SureYouWantToDelete">\"Are you sure you want to delete \"</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

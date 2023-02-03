@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -43,6 +44,11 @@ public class HomeFragment extends Fragment implements
     private ImageButton btSubmitCode;
     private TextInputEditText txtInput;
     private String lastText;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -123,10 +129,13 @@ public class HomeFragment extends Fragment implements
     private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
-            if(result.getText() == null || result.getText().equals(lastText)) {
-                //Prevent duplicate scans
-                return;
-            }
+            /**
+             * if(result.getText() == null || result.getText().equals(lastText)) {
+             *                 //Prevent duplicate scans
+             *             *    return;
+             *             }
+             */
+
             lastText = result.getText();
             Toast.makeText(getContext().getApplicationContext(), result.getText(), Toast.LENGTH_SHORT).show();
             //After scan find and show details in new Activity
@@ -144,31 +153,36 @@ public class HomeFragment extends Fragment implements
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        capture.onDestroy();
+        if(capture != null)
+            capture.onDestroy();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        capture.onResume();
+        if(capture != null)
+            capture.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        capture.onPause();
+        if(capture != null)
+            capture.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        capture.onDestroy();
+        if(capture != null)
+            capture.onDestroy();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        capture.onSaveInstanceState(outState);
+        if(capture != null)
+            capture.onSaveInstanceState(outState);
     }
 
     /**
@@ -204,6 +218,7 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(capture != null)
+            capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

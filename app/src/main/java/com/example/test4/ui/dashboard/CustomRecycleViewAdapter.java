@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,14 +26,16 @@ import java.util.ArrayList;
 public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycleViewAdapter.MyViewHolder> {
 
     private final Context context;
-    Activity activity;
     private final ArrayList barcode_id, barcode_name, barcode_photo, barcode_last_scan_timestamp;
+    private Activity activity;
 
-    public CustomRecycleViewAdapter( Context context,
+    public CustomRecycleViewAdapter( Activity activity,
+                                     Context context,
                                     ArrayList barcode_id,
                                     ArrayList barcode_name,
                                     ArrayList barcode_photo,
                                     ArrayList barcode_last_scan_timestamp) {
+        this.activity = activity;
         this.context = context;
         this.barcode_id = barcode_id;
         this.barcode_name = barcode_name;
@@ -62,7 +65,7 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
             public void onClick(View view) {
                 Intent intent = new Intent(context, HistoryDetailsActivity.class);
                 intent.putExtra("ID_CODE", String.valueOf(barcode_id.get(position)));
-                context.startActivity(intent);
+                activity.startActivityForResult(intent, 1);
             }
         });
     }

@@ -1,11 +1,20 @@
 package com.example.test4;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.telecom.Call;
+import android.widget.Toast;
 
+import com.example.test4.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -32,6 +41,15 @@ public class BottomMainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_bottom_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navMainView, navController);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            //I know it is not the best solution to refresh recyclerView on details fragment...
+            recreate();
+        }
     }
 
     @Override
