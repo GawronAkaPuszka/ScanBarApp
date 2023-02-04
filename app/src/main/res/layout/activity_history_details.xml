@@ -41,14 +41,17 @@
         android:layout_marginTop="8dp"
         android:text="@string/barcode"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/txt_details_scan_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="Scan timestamp"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txt_details_barcode"
         app:layout_constraintTop_toBottomOf="@+id/txt_details_barcode" />
 
@@ -60,7 +63,9 @@
         android:text="Screenshot timestamp"
         app:layout_constraintBottom_toTopOf="@+id/txt_details_link"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_details_link"
@@ -71,7 +76,10 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_details_link_timestamp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="10sp"
+        android:textStyle="italic"
+        android:textAlignment="center"/>
 
     <TextView
         android:id="@+id/txt_details_link_timestamp"
@@ -81,7 +89,9 @@
         android:text="Link timestamp"
         app:layout_constraintBottom_toTopOf="@+id/txt_details_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bt_details_return"
@@ -123,7 +133,19 @@
             android:layout_height="match_parent"
             android:hint="@string/type_in_barcode_name_hint"
             android:maxLines="1"
-            android:inputType="text"/>
+            android:inputType="text"
+            />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_details_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:contentDescription="@android:string/search_go"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_details_return"
+        app:layout_constraintEnd_toStartOf="@+id/bt_details_save"
+        app:srcCompat="@drawable/ic_baseline_search_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

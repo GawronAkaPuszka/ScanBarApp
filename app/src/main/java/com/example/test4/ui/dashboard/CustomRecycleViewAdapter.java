@@ -27,7 +27,7 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
 
     private final Context context;
     private final ArrayList barcode_id, barcode_name, barcode_photo, barcode_last_scan_timestamp;
-    private Activity activity;
+    private final Activity activity;
 
     public CustomRecycleViewAdapter( Activity activity,
                                      Context context,

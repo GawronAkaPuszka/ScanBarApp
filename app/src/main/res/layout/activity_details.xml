@@ -8,8 +8,10 @@
     tools:context=".DetailsActivity">
 
   <LinearLayout
+      android:id="@+id/linear_web_view_layout"
       android:layout_width="0dp"
       android:layout_height="0dp"
+      android:layout_marginBottom="8dp"
       android:orientation="vertical"
       app:layout_constraintBottom_toTopOf="@+id/bt_float_goback"
       app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +22,7 @@
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="0dp">
 
     </WebView>
   </LinearLayout>

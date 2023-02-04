@@ -53,25 +53,33 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         onCreate(db);
     }
 
-    public void addBarcode(String code, String date) {
+    public boolean addBarcode(String code, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_BARCODE_ID, code);
-        cv.put(COLUMN_LAST_SCAN_TIMESTAMP, "00.00");
-        cv.put(COLUMN_NAME, "Insert name");
-        byte[] blankPhoto = getBitmapAsByteArray(BitmapFactory.decodeResource(context.getResources(), R.drawable.question_mark));
-        cv.put(COLUMN_PHOTO, blankPhoto);
-        cv.put(COLUMN_PHOTO_TIMESTAMP, "No screenshot given");
-        cv.put(COLUMN_LINK, "No link saved");
-        cv.put(COLUMN_LINK_TIMESTAMP, "No link given");
+        Cursor cursor = readOneItem(code);
+        if (cursor.getCount() >= 1)  {
+            return false;
+        } else {
+            cv.put(COLUMN_BARCODE_ID, code);
+            cv.put(COLUMN_LAST_SCAN_TIMESTAMP, date);
+            cv.put(COLUMN_NAME, "");
+            byte[] blankPhoto = getBitmapAsByteArray(BitmapFactory.decodeResource(context.getResources(), R.drawable.question_mark));
+            cv.put(COLUMN_PHOTO, blankPhoto);
+            cv.put(COLUMN_PHOTO_TIMESTAMP, "No screenshot given");
+            cv.put(COLUMN_LINK, "No link saved");
+            cv.put(COLUMN_LINK_TIMESTAMP, "No link given");
 
-        long result = db.insert(TABLE_NAME, null, cv);
+            long result = db.insert(TABLE_NAME, null, cv);
 
-        if(result == -1) {
-            Toast.makeText(context, R.string.UpdateFailed, Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(context, R.string.UpdateSuccess, Toast.LENGTH_SHORT).show();
+            if(result == -1) {
+                Toast.makeText(context, R.string.UpdateFailed, Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                Toast.makeText(context, R.string.UpdateSuccess, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        }
     }
 
     public void updateBarcodeName(String code, String name) {
@@ -89,11 +97,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         }
     }
 
-    public void updateBarcodeImage(String code, byte[] rawScreenshot) {
+    public void updateBarcodeImage(String code, byte[] rawScreenshot, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_PHOTO, rawScreenshot);
+        cv.put(COLUMN_PHOTO_TIMESTAMP, date);
 
         long result = db.update(TABLE_NAME, cv, "barcode_id=?", new String[]{code});
 
@@ -104,11 +113,27 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         }
     }
 
-    public void updateBarcodeLink(String code, String link) {
+    public void updateBarcodeLink(String code, String link, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_LINK, link);
+        cv.put(COLUMN_LINK_TIMESTAMP, date);
+
+        long result = db.update(TABLE_NAME, cv, "barcode_id=?", new String[]{code});
+
+        if(result == -1) {
+            Toast.makeText(context, R.string.UpdateFailed, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, R.string.UpdateSuccess, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void updateBarcodeScanTimestamp(String code, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_LAST_SCAN_TIMESTAMP, date);
 
         long result = db.update(TABLE_NAME, cv, "barcode_id=?", new String[]{code});
 
@@ -155,8 +180,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper  {
         }
         return cursor;
     }
-
-
 
     private static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

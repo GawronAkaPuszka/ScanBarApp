@@ -10,6 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.example.test4.ui.dashboard.MyDatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,6 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
         protected ProgressBar progressBar;
         private MyDatabaseHelper db;
         private WebSettings webSettings;
+        private LinearLayout linearWebViewLayout;
 
         //Shop list buttons
         private ImageButton btAllegro;
@@ -38,6 +41,7 @@ public class DetailsActivity extends AppCompatActivity {
         private ImageButton btGoogle;
         //======================
         private String code;
+        private String link;
         private String activeView;
 
         @Override
@@ -58,25 +62,32 @@ public class DetailsActivity extends AppCompatActivity {
             btCarrefour = findViewById(R.id.img_bt_carrefour);
             btObi = findViewById(R.id.img_bt_obi);
             btGoogle = findViewById(R.id.img_bt_google);
+            linearWebViewLayout = findViewById(R.id.linear_web_view_layout);
 
             Bundle extras = getIntent().getExtras();
-            if (extras != null) {
+            if (extras != null && extras.getString("LINK") != null ) {
                 code = extras.getString("ID_CODE");
-                if(code.equals("")) {
-                    Toast.makeText(getApplicationContext(), "No code given", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                link = extras.getString("LINK");
+                activeView = "none";
+                myWebView.loadUrl(link);
+                setTitle(link);
+            } else {
+                code = extras.getString("ID_CODE");
                 activeView = "google";
                 myWebView.loadUrl("https://www.google.com/search?q=" + code);
-            } else {
-                activeView = "none";
+                setTitle(myWebView.getUrl());
             }
 
             btTakeScreenShot = findViewById(R.id.bt_float_screenshoot);
             btSaveLink = findViewById(R.id.bt_float_saveSite);
+
             db = new MyDatabaseHelper(this);
-            Date currentTime = Calendar.getInstance().getTime();
-            db.addBarcode(code, currentTime.toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String date = sdf.format(System.currentTimeMillis());
+
+            if(!(db.addBarcode(code, date))) {
+                db.updateBarcodeScanTimestamp(code, date);
+            }
 
             webSettings = myWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
@@ -150,6 +161,13 @@ public class DetailsActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            btSaveLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    insertSiteLinkInDb(myWebView.getUrl());
+                }
+            });
         }
 
         private void adjustItems() {
@@ -181,16 +199,25 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         private Bitmap takeWebviewScreenshot() {
-            Bitmap screenshot = Bitmap.createBitmap(myWebView.getWidth(), myWebView.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(screenshot);
-            myWebView.draw(canvas);
+            //adding linear view allowed to take screenshot of visible webview content
+            linearWebViewLayout.setDrawingCacheEnabled(true);
+            Bitmap screenshot = Bitmap.createBitmap(linearWebViewLayout.getDrawingCache());
+            linearWebViewLayout.setDrawingCacheEnabled(false);
             return screenshot;
-            //TODO fix screenshots
         }
 
         private void insertScreenshotInDb(Bitmap img) {
             byte[] rawScreenshot = getBitmapAsByteArray(img);
-            db.updateBarcodeImage(code, rawScreenshot);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String date = sdf.format(System.currentTimeMillis());
+            db.updateBarcodeImage(code, rawScreenshot, date);
+        }
+
+        private void insertSiteLinkInDb(String link) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String date = sdf.format(System.currentTimeMillis());
+            db.updateBarcodeLink(code, link, date);
+            db.updateBarcodeName(code, getTitle().toString());
         }
 
         private static byte[] getBitmapAsByteArray(Bitmap bitmap) {

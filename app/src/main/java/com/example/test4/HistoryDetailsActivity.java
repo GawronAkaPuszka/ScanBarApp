@@ -6,7 +6,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -35,6 +39,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
     private ImageButton btDelete;
     private FloatingActionButton btReturn;
     private FloatingActionButton btSave;
+    private FloatingActionButton btSearch;
 
     MyDatabaseHelper db;
 
@@ -71,6 +76,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
         btReturn = findViewById(R.id.bt_details_return);
         btSave = findViewById(R.id.bt_details_save);
         btSave.hide();
+        btSearch = findViewById(R.id.bt_details_search);
 
         setTitle(code);
     }
@@ -119,6 +125,19 @@ public class HistoryDetailsActivity extends AppCompatActivity {
 
             }
         });
+
+        btSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startDetailsActivity();           }
+        });
+
+        txtLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveLinkToClipboard();
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -136,7 +155,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
                 if (imgByte != null)
                     imgScreenshot.setImageBitmap(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
                 txtScreenshotTimestamp.setText(getString(R.string.ScreenshotTimestamp) + " " + cursor.getString(4));
-                txtLink.setText(getString(R.string.SavedLink) + " " + cursor.getString(5));
+                txtLink.setText(cursor.getString(5));
                 txtLinkTimestamp.setText(getString(R.string.SavedLinkTimestamp) + " " + cursor.getString(6));
             }
         }
@@ -160,5 +179,20 @@ public class HistoryDetailsActivity extends AppCompatActivity {
             }
         });
         builder.create().show();
+    }
+
+    private void startDetailsActivity() {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("ID_CODE",code);
+        intent.putExtra("LINK",txtLink.getText());
+        startActivity(intent);
+    }
+
+    private void saveLinkToClipboard() {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("LINK", txtLink.getText());
+        clipboard.setPrimaryClip(clip);
+
+        Toast.makeText(this, R.string.LinkCopiedToClipboard, Toast.LENGTH_SHORT).show();
     }
 }

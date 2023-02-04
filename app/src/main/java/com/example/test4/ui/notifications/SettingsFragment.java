@@ -27,6 +27,10 @@ public class SettingsFragment extends Fragment {
         final TextView textView = binding.textNotifications;
         settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
+
+        //TODO make language choosing fragment
+        //TODO the excel scanning thing...
+        //TODO make word file :((
     }
 
     @Override
