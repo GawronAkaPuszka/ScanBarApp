@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BarReaderApp</string>
+    <string name="title_activity_bottom_main">BottomMainActivity</string>
+    <string name="title_home">Okno skanowania</string>
+    <string name="title_dashboard">Historia</string>
+    <string name="title_notifications">Ustawienia</string>
+
+    <string name="status_scanner_message">Umieść kod kreskowy wewnątrz okienka</string>
+    <string name="turn_on_flashlight">Włącz latarke</string>
+    <string name="turn_off_flashlight">Wyłącz latarke</string>
+    <string name="txt_input">Wpisz kod lub nazwę produktu</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Następny</string>
+    <string name="previous">Poprzedni</string>
+
+    <string name="barcode">Kod kreskowy</string>
+    <string name="delete">Usuń</string>
+    <string name="return_text">Powrót</string>
+    <string name="edit">Edytuj</string>
+    <string name="saveSite">Zapisz</string>
+    <string name="screenshot">Zrzut ekranu</string>
+    <string name="UpdateFailed">Wystąpił błąd</string>
+    <string name="UpdateSuccess">Zaktualizowano pomyślnie</string>
+    <string name="DeleteFailed">Wystąpił błąd</string>
+    <string name="DeleteSuccess">Pomyślnie usunięto</string>
+    <string name="onDataUpdate">Zaktualizowano pomyślnie</string>
+    <string name="ScanTimestamp">Data zeskanowania:</string>
+    <string name="name">Nazwa:</string>
+    <string name="ScreenshotTimestamp">Data zrzutu ekranu</string>
+    <string name="SavedLink">Zapisany link:</string>
+    <string name="SavedLinkTimestamp">Data zapisania linku:</string>
+    <string name="TypeInBarcodeNameHint">Wpisz kod kreskowy</string>
+    <string name="SureYouWantToDelete">Jesteś pewny, że chcesz usunąć</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="LinkCopiedToClipboard">Link skopiowany do schowka</string>
+    <string name="MyName">Piotr Gawroński</string>
+    <string name="AboutMe">
+        Aplikacja powstawała jako praca inżynierska dla moich studiów.
+        Aktualnie znajdujemy się na stronie ustawień.
+        W ramach projektu użytkownik miałby możliwość wybrania języka aplikacji.
+        Możliwość ta jest jednak ustawieniem automatycznym… także na razie nie będzie tu żadnego ustawienia :)
+    </string>
+</resources>

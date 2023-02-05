@@ -131,7 +131,7 @@
             android:id="@+id/txt_details_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/type_in_barcode_name_hint"
+            android:hint="@string/TypeInBarcodeNameHint"
             android:maxLines="1"
             android:inputType="text"
             />

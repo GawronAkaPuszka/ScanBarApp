@@ -9,15 +9,15 @@
     <string name="turn_on_flashlight">Turn on Flashlight</string>
     <string name="turn_off_flashlight">Turn off Flashlight</string>
     <string name="txt_input">Type in barcode or product name</string>
-    <string name="torch_button">TorchButton</string>
-    <string name="shop_1">carrefour</string>
-    <string name="shop_2">obi</string>
-    <string name="google">google</string>
-    <string name="shop_3">allegro</string>
-    <string name="title_activity_history_details">HistoryDetailsActivity</string>
+    <string name="torch_button" translatable="false">TorchButton</string>
+    <string name="shop_1" translatable="false">carrefour</string>
+    <string name="shop_2" translatable="false">obi</string>
+    <string name="google" translatable="false">google</string>
+    <string name="shop_3" translatable="false">allegro</string>
+    <string name="title_activity_history_details" translatable="false">HistoryDetailsActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -31,16 +31,22 @@
     <string name="UpdateSuccess">Update SUCCESS!</string>
     <string name="DeleteFailed">Delete FAILED!</string>
     <string name="DeleteSuccess">Delete SUCCESS!</string>
-    <string name="barcode_name">Barcode name: </string>
+    <string name="barcode_name" translatable="false">Barcode name: </string>
     <string name="onDataUpdate">Data has been updated!</string>
     <string name="ScanTimestamp">Scan timestamp:</string>
     <string name="name">Name: </string>
     <string name="ScreenshotTimestamp">Screenshot timestamp:</string>
     <string name="SavedLink">Saved Link:</string>
     <string name="SavedLinkTimestamp">Saved link timestamp:</string>
-    <string name="type_in_barcode_name_hint">Type in barcode name</string>
+    <string name="TypeInBarcodeNameHint">Type in barcode name</string>
     <string name="SureYouWantToDelete">\"Are you sure you want to delete \"</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="LinkCopiedToClipboard">Link copied to clipboard</string>
+    <string name="MyName">Piotr Gawroński</string>
+    <string name="AboutMe">
+        This app was made as final work for my studies. It is settings page.
+        One and only setting for now was supposed to be language change option.
+        It is being made in the background so no settings for now I guess… :)
+    </string>
 </resources>
