@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">BarReaderApp</string>
+    <string name="title_activity_bottom_main">Untere Main Aktivität</string>
+    <string name="title_home">Scan Fenster</string>
+    <string name="title_dashboard">Verlauf</string>
+    <string name="title_notifications">Einstellungen</string>
+
+    <string name="status_scanner_message">Platziere den Barcode in der Box</string>
+    <string name="turn_on_flashlight">Taschenlampe anschalten</string>
+    <string name="turn_off_flashlight">Taschenlampe ausschalten</string>
+    <string name="txt_input">Barcode oder Produkt Namen eingeben</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Nächster</string>
+    <string name="previous">Zurück</string>
+
+    <string name="barcode">Barcode</string>
+    <string name="delete">löschen</string>
+    <string name="return_text">zurück</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="saveSite">Speichern</string>
+    <string name="screenshot">Screenshot</string>
+    <string name="UpdateFailed">Update fehlgeschlagen!</string>
+    <string name="UpdateSuccess">Update erfolgreich!</string>
+    <string name="DeleteFailed">Löschen fehlgeschlagen!</string>
+    <string name="DeleteSuccess">Erfolgreich gelöscht!</string>
+    <string name="onDataUpdate">Daten wurden geupdated!</string>
+    <string name="ScanTimestamp">Scan timestamp:</string>
+    <string name="name">Name: </string>
+    <string name="ScreenshotTimestamp">Screenshot timestamp:</string>
+    <string name="SavedLink">Gespeicherter Link:</string>
+    <string name="SavedLinkTimestamp">Saved link timestamp:</string>
+    <string name="TypeInBarcodeNameHint">Barcode Namen eingeben</string>
+    <string name="SureYouWantToDelete">\"Bist du sicher, dass du es löschen willst \"</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="LinkCopiedToClipboard">Link in die Zwischenablage kopiert</string>
+    <string name="MyName">Piotr Gawroński</string>
+    <string name="AboutMe">
+        Diese App ist als Abschlussarbeit für mein Studium entstanden. Dies ist die Einstellungsseite.
+        Eine einzige Einstellung sollte vorerst die Option zum Ändern der Sprache sein.
+        Das wird im Hintergrund gemacht, also keine Einstellungen im Moment, denke ich… :)
+    </string>
+</resources>
