@@ -16,7 +16,7 @@ import com.example.test4.R;
 import java.io.ByteArrayOutputStream;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper  {
-    private Context context;
+    private final Context context;
     private static final String DATABASE_NAME = "BarcodeLibrary.db";
     private static final int DATABASE_VERSION = 1;
 

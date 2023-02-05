@@ -2,24 +2,19 @@ package com.example.test4.ui.home;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.test4.DetailsActivity;
 import com.example.test4.R;
@@ -84,52 +79,10 @@ public class HomeFragment extends Fragment implements
         barcodeScannerView.decodeContinuous(callback);
     }
 
-    private void initListeners() {
-        barcodeScannerView.setTorchListener(this);
-
-        btSubmitCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(txtInput.getText().toString().trim().equals("")){
-                    Toast.makeText(getContext(), "No code given", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                    intent.putExtra("ID_CODE",txtInput.getText().toString().trim());
-                    startActivity(intent);
-                }
-            }
-        });
-
-        switchFlashlightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchFlashlight(view);
-            }
-        });
-
-        txtInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() != 0)
-                    btSubmitCode.setClickable(true);
-                else
-                    btSubmitCode.setClickable(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-    }
-
     private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
-            /**
+            /*
              * if(result.getText() == null || result.getText().equals(lastText)) {
              *                 //Prevent duplicate scans
              *             *    return;
@@ -140,7 +93,7 @@ public class HomeFragment extends Fragment implements
             Toast.makeText(getContext().getApplicationContext(), result.getText(), Toast.LENGTH_SHORT).show();
             //After scan find and show details in new Activity
             Intent i = new Intent(getActivity(), DetailsActivity.class);
-            i.putExtra("ID_CODE",result.getText());
+            i.putExtra("ID_CODE", result.getText());
             startActivity(i);
         }
 
@@ -148,6 +101,37 @@ public class HomeFragment extends Fragment implements
         public void possibleResultPoints(List<ResultPoint> resultPoints) {
         }
     };
+
+    private void initListeners() {
+        barcodeScannerView.setTorchListener(this);
+
+        btSubmitCode.setOnClickListener(view -> {
+            if (txtInput.getText().toString().trim().equals("")) {
+                Toast.makeText(getContext(), "No code given", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                intent.putExtra("ID_CODE", txtInput.getText().toString().trim());
+                startActivity(intent);
+            }
+        });
+
+        switchFlashlightButton.setOnClickListener(this::switchFlashlight);
+
+        txtInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                btSubmitCode.setClickable(charSequence.length() != 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+    }
 
     @Override
     public void onDestroyView() {
@@ -197,11 +181,10 @@ public class HomeFragment extends Fragment implements
     public void switchFlashlight(View view) {
         if (!flashOn) {
             barcodeScannerView.setTorchOn();
-            flashOn = !flashOn;
         } else {
             barcodeScannerView.setTorchOff();
-            flashOn = !flashOn;
         }
+        flashOn = !flashOn;
     }
 
     @Override
