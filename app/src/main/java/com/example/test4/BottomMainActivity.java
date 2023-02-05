@@ -1,35 +1,25 @@
 package com.example.test4;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.telecom.Call;
-import android.widget.Toast;
-
-import com.example.test4.ui.home.HomeFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.test4.databinding.ActivityBottomMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomMainActivity extends AppCompatActivity {
-
-    private ActivityBottomMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityBottomMainBinding.inflate(getLayoutInflater());
+        ActivityBottomMainBinding binding = ActivityBottomMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav__main_view);

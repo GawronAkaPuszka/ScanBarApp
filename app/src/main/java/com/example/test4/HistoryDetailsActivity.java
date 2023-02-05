@@ -1,27 +1,23 @@
 package com.example.test4;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.ActivityResultRegistry;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test4.ui.dashboard.MyDatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -82,27 +78,14 @@ public class HistoryDetailsActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
-        btDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmDialog();
-            }
-        });
+        btDelete.setOnClickListener(view -> confirmDialog());
 
-        btReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        btReturn.setOnClickListener(view -> finish());
 
-        btSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                db.updateBarcodeName(code, txtName.getText().toString().trim());
-                Toast.makeText(HistoryDetailsActivity.this, R.string.onDataUpdate, Toast.LENGTH_SHORT).show();
-                btSave.hide();
-            }
+        btSave.setOnClickListener(view -> {
+            db.updateBarcodeName(code, txtName.getText().toString().trim());
+            Toast.makeText(HistoryDetailsActivity.this, R.string.onDataUpdate, Toast.LENGTH_SHORT).show();
+            btSave.hide();
         });
 
         txtName.addTextChangedListener(new TextWatcher() {
@@ -113,7 +96,7 @@ public class HistoryDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() != 0 && charSequence.toString().trim() != name){
+                if (charSequence.length() != 0 && !charSequence.toString().trim().equals(name)) {
                     btSave.show();
                 } else {
                     btSave.hide();
@@ -126,18 +109,9 @@ public class HistoryDetailsActivity extends AppCompatActivity {
             }
         });
 
-        btSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startDetailsActivity();           }
-        });
+        btSearch.setOnClickListener(view -> startDetailsActivity());
 
-        txtLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveLinkToClipboard();
-            }
-        });
+        txtLink.setOnClickListener(view -> saveLinkToClipboard());
     }
 
     @SuppressLint("SetTextI18n")
@@ -165,18 +139,12 @@ public class HistoryDetailsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.delete) + " " + getTitle() + "?");
         builder.setMessage(getString(R.string.SureYouWantToDelete) + " " + getTitle() + "?");
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                db.deleteOneBarcode(code);
-                finish();
-            }
+        builder.setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+            db.deleteOneBarcode(code);
+            finish();
         });
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        builder.setNegativeButton(R.string.no, (dialogInterface, i) -> {
 
-            }
         });
         builder.create().show();
     }

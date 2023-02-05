@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,15 +55,12 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
         //Photo config
         Bitmap screenshot = (Bitmap) barcode_photo.get(position);
 
-        holder.barcode_photo.setImageBitmap(Bitmap.createScaledBitmap(screenshot, 40, 90, false ));
+        holder.barcode_photo.setImageBitmap(Bitmap.createScaledBitmap(screenshot, 40, 90, false));
         holder.barcode_scan_timestamp.setText(String.valueOf(barcode_last_scan_timestamp.get(position)));
-        holder.mainHistoryLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, HistoryDetailsActivity.class);
-                intent.putExtra("ID_CODE", String.valueOf(barcode_id.get(position)));
-                activity.startActivityForResult(intent, 1);
-            }
+        holder.mainHistoryLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(context, HistoryDetailsActivity.class);
+            intent.putExtra("ID_CODE", String.valueOf(barcode_id.get(position)));
+            activity.startActivityForResult(intent, 1);
         });
     }
 
@@ -75,7 +69,7 @@ public class CustomRecycleViewAdapter extends RecyclerView.Adapter<CustomRecycle
         return barcode_id.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView barcode_id, barcode_name, barcode_scan_timestamp;
         ImageView barcode_photo;
