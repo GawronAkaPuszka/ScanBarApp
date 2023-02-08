@@ -129,10 +129,7 @@ public class HomeFragment extends Fragment implements
             @Override
 
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() != 0)
-                    btSubmitCode.setActivated(true);
-                else
-                    btSubmitCode.setActivated(false);
+                btSubmitCode.setActivated(charSequence.length() != 0);
             }
 
             @Override
@@ -169,6 +166,7 @@ public class HomeFragment extends Fragment implements
             if(!nowScanToPC) serverThread = null;
 
             //This part is to connect with PC and send barcodes until connection is destroyed
+            //Code works pretty mch the same unless You scan code that starts with "PC_CONNECT_REQUEST"
             if (nowScanToPC) {
                 if (!serverThread.isAlive()) {
                     nowScanToPC = false;
