@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.test4.DetailsActivity;
 import com.example.test4.R;
 import com.example.test4.databinding.FragmentHomeBinding;
+import com.example.test4.ui.notifications.ClientTCPThread;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
@@ -44,6 +45,9 @@ public class HomeFragment extends Fragment implements
     private ImageButton btSubmitCode;
     private TextInputEditText txtInput;
     private String lastText;
+    ClientTCPThread serverThread;
+    boolean nowScanToPC;
+    Button btCloseConnection;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,8 +75,12 @@ public class HomeFragment extends Fragment implements
         txtInput = binding.homeTxtInput;
         switchFlashlightButton = binding.btFlashlight;
         btSubmitCode = binding.btSubmitCode;
-        btSubmitCode.setClickable(false);
+        btSubmitCode.setActivated(false);
         flashOn = false;
+        serverThread = null;
+        nowScanToPC = false;
+        btCloseConnection = binding.btMainDisconnect;
+        btCloseConnection.setVisibility(View.GONE);
 
         //if the device does not have flashlight in its camera,
         //then remove the switch flashlight button...
@@ -92,6 +100,12 @@ public class HomeFragment extends Fragment implements
             public void onClick(View view) {
                 if(txtInput.getText().toString().trim().equals("")){
                     Toast.makeText(getContext(), "No code given", Toast.LENGTH_SHORT).show();
+                } else if (nowScanToPC) {
+                    if(serverThread != null){
+                        serverThread.sendMessage("SCANNED_BARCODE " + txtInput.getText().toString().trim());
+                    } else{
+                        nowScanToPC = false;
+                    }
                 } else {
                     Intent intent = new Intent(getActivity(), DetailsActivity.class);
                     intent.putExtra("ID_CODE",txtInput.getText().toString().trim());
@@ -113,15 +127,32 @@ public class HomeFragment extends Fragment implements
             }
 
             @Override
+
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(charSequence.length() != 0)
-                    btSubmitCode.setClickable(true);
+                    btSubmitCode.setActivated(true);
                 else
-                    btSubmitCode.setClickable(false);
+                    btSubmitCode.setActivated(false);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        btCloseConnection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(serverThread != null) {
+                    Thread th = new Thread(new Runnable() { public void run() {
+                        serverThread.stopConnection();
+                        serverThread = null;
+                    }});
+                    th.setName("endConnection");
+                    th.start();
+                    btCloseConnection.setVisibility(View.GONE);
+                    nowScanToPC = false;
+                }
             }
         });
     }
@@ -129,19 +160,40 @@ public class HomeFragment extends Fragment implements
     private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
-            /**
-             * if(result.getText() == null || result.getText().equals(lastText)) {
-             *                 //Prevent duplicate scans
-             *             *    return;
-             *             }
-             */
+            if((result.getText() == null || result.getText().equals(lastText)) && nowScanToPC) {
+                //Prevent duplicate scans when connected to PC
+                return;
+            }
 
             lastText = result.getText();
-            Toast.makeText(getContext().getApplicationContext(), result.getText(), Toast.LENGTH_SHORT).show();
-            //After scan find and show details in new Activity
-            Intent i = new Intent(getActivity(), DetailsActivity.class);
-            i.putExtra("ID_CODE",result.getText());
-            startActivity(i);
+            if(!nowScanToPC) serverThread = null;
+
+            //This part is to connect with PC and send barcodes until connection is destroyed
+            if (nowScanToPC) {
+                if (!serverThread.isAlive()) {
+                    nowScanToPC = false;
+                    btCloseConnection.setVisibility(View.GONE);
+                } else if(serverThread != null) {
+                    Toast.makeText(getContext(), serverThread.sendMessage("SCANNED_BARCODE " + result.getText()), Toast.LENGTH_SHORT).show();
+                } else {
+                    nowScanToPC = false;
+                }
+            } else if (result.getText().startsWith("PC_CONNECT_REQUEST")) {
+                serverThread = new ClientTCPThread(result.getText().substring(result.getText().indexOf("IP")+3,result.getText().indexOf("PORT")),
+                        Integer.parseInt(result.getText().substring(result.getText().indexOf("PORT")+5)), getContext());
+                serverThread.setName("SendDataToPCThread");
+                serverThread.start();
+
+                btCloseConnection.setVisibility(View.VISIBLE);
+                nowScanToPC = true;
+                //Here PC connect section ends. Now We can scan barcodes locally
+            } else {
+                //After scan, without PC connect flag, find and show details in new Activity
+                Toast.makeText(getContext(), result.getText(), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getActivity(), DetailsActivity.class);
+                i.putExtra("ID_CODE",result.getText());
+                startActivity(i);
+            }
         }
 
         @Override

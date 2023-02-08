@@ -60,7 +60,7 @@
         android:src="@drawable/ic_check_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bt_flashlight" />
+        app:layout_constraintStart_toEndOf="@+id/bt_main_disconnect" />
 
     <ImageButton
         android:id="@+id/bt_flashlight"
@@ -68,8 +68,18 @@
         android:layout_height="60dp"
         android:contentDescription="Flashlight"
         android:src="@drawable/ic_baseline_flashlight_on_24"
-        app:layout_constraintEnd_toStartOf="@+id/bt_submit_code"
+        app:layout_constraintEnd_toStartOf="@+id/bt_main_disconnect"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bt_submit_code" />
+
+    <Button
+        android:id="@+id/bt_main_disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Stop Connection"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_flashlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
